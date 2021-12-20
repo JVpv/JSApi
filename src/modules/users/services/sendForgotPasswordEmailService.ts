@@ -1,3 +1,4 @@
+import EtherealMail from '@config/mail/etherealMail';
 import AppError from '@shared/errors/appError';
 import { hash } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
@@ -19,9 +20,22 @@ class SendForgotPasswordEmailService {
       throw new AppError('User does not exist!');
     }
 
-    const token = await userTokensRepository.generate(user.id);
+    const { token } = await userTokensRepository.generate(user.id);
 
-    console.log(token);
+    await EtherealMail.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[API JS] Recuperação de senha',
+      templateData: {
+        template: `Olá {{name}}, sua solicitação de redefinição de senha foi recebida. {{token}}`,
+        variables: {
+          name: user.name,
+          token: token,
+        },
+      },
+    });
   }
 }
 
