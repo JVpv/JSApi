@@ -1,8 +1,7 @@
 import EtherealMail from '@config/mail/etherealMail';
 import AppError from '@shared/errors/appError';
-import { hash } from 'bcryptjs';
 import { getCustomRepository } from 'typeorm';
-import User from '../typeorm/entities/user';
+import path from 'path';
 import UsersRepository from '../typeorm/repositories/usersRepository';
 import UserTokensRepository from '../typeorm/repositories/userTokensRepository';
 
@@ -22,6 +21,13 @@ class SendForgotPasswordEmailService {
 
     const { token } = await userTokensRepository.generate(user.id);
 
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot_password.hbs',
+    );
+
     await EtherealMail.sendMail({
       to: {
         name: user.name,
@@ -29,10 +35,10 @@ class SendForgotPasswordEmailService {
       },
       subject: '[API JS] Recuperação de senha',
       templateData: {
-        template: `Olá {{name}}, sua solicitação de redefinição de senha foi recebida. {{token}}`,
+        file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          token: token,
+          link: `http://localhost:3000/reset_password?token=${token}`,
         },
       },
     });
