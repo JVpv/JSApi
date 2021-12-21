@@ -19,6 +19,12 @@ class UpdateUserService {
       throw new AppError('User does not exist!');
     }
 
+    const userUpdateEmail = await usersRepository.findByEmail(email);
+
+    if (userUpdateEmail && userUpdateEmail.id != user.id) {
+      throw new AppError('There is already another user with this e-mail.');
+    }
+
     user.name = name;
     user.email = email;
 

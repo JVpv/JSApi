@@ -1,3 +1,4 @@
+import customersRouter from '@modules/customers/routes/customers.routes';
 import productsRouter from '@modules/products/routes/products.routes';
 import passwordsRouter from '@modules/users/routes/passwords.routes';
 import profilesRouter from '@modules/users/routes/profiles.routes';
@@ -12,6 +13,7 @@ routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/passwords', passwordsRouter);
 routes.use('/profile', profilesRouter);
+routes.use('/customers', customersRouter);
 
 routes.get('/', (request, response) => {
   return response.json({ object: 'Hello world!' });
