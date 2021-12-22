@@ -14,10 +14,6 @@ export class CreateOrdersProducts1640091675917 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'name',
-            type: 'varchar',
-          },
-          {
             name: 'price',
             type: 'decimal',
             precision: 10,
