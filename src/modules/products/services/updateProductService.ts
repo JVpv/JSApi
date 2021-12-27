@@ -1,4 +1,4 @@
-import RedisCache from '@shared/cache/redisCache';
+import redisCache from '@shared/cache/redisCache';
 import AppError from '@shared/errors/appError';
 import { getCustomRepository } from 'typeorm';
 import Product from '../typeorm/entities/product';
@@ -21,8 +21,6 @@ class UpdateProductService {
     const productsRepository = getCustomRepository(ProductsRepository);
 
     const product = await productsRepository.findOne(id);
-
-    const redisCache = new RedisCache();
 
     if (!product) {
       throw new AppError('Product does not exist!');
