@@ -5,9 +5,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { IUser } from '@modules/users/domain/models/iUser';
 
 @Entity('users')
-class User {
+class User implements IUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

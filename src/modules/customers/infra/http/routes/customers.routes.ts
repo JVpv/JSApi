@@ -46,6 +46,4 @@ customersRouter.put(
   customersController.update,
 );
 
-customersRouter.delete('/:id', isAuthenticated, customersController.delete);
-
 export default customersRouter;
